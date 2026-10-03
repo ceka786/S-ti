@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Erdbeer-Mascarpone-Biskuitrolle · Epres mascarponés piskótatekercs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#16181F;
+  --tile:#EEF1EC;
+  --tile-2:#E2E7DF;
+  --berry:#D4174A;
+  --berry-soft:#F7DCE3;
+  --vanilla:#F6E7C3;
+  --slate:#5D6670;
+  --paper:#FCFDFB;
+  --r:14px;
+  --display:'Bricolage Grotesque','Trebuchet MS',sans-serif;
+  --body:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--tile);color:var(--ink);font-family:var(--body);
+  font-size:17px;line-height:1.55;padding-bottom:96px;
+  background-image:linear-gradient(var(--tile-2) 1px,transparent 1px),linear-gradient(90deg,var(--tile-2) 1px,transparent 1px);
+  background-size:64px 64px;
+}
+.wrap{max-width:640px;margin:0 auto;padding:0 18px}
+
+.topbar{display:flex;justify-content:flex-end;padding:16px 0 0}
+.lang{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.lang button{
+  border:0;background:transparent;color:var(--ink);font-family:var(--display);
+  font-weight:600;font-size:13px;letter-spacing:.06em;padding:7px 15px;cursor:pointer;transition:.15s
+}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.lang button:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+
+header{padding:14px 0 18px}
+.eyebrow{font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--berry);margin:0 0 6px}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(28px,7.6vw,42px);
+  line-height:1.04;letter-spacing:-.02em;margin:0 0 8px}
+.sub{margin:0;color:var(--slate);font-size:15px;max-width:46ch}
+
+.tabs{display:flex;gap:8px;margin:20px 0 4px}
+.tab{flex:1;border:1.5px solid var(--ink);background:transparent;color:var(--ink);
+  font-family:var(--display);font-weight:600;font-size:15px;
+  padding:11px 10px;border-radius:var(--r);cursor:pointer;transition:.15s}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tab:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+
+.roll{display:flex;align-items:center;gap:16px;margin:22px 0 6px}
+.roll svg{width:86px;height:86px;flex:none}
+.roll .track{fill:none;stroke:var(--tile-2);stroke-width:7;stroke-linecap:round}
+.roll .fill{fill:none;stroke:var(--berry);stroke-width:7;stroke-linecap:round;transition:stroke-dashoffset .45s cubic-bezier(.4,0,.2,1)}
+.roll .cream{fill:none;stroke:var(--vanilla);stroke-width:2.5;stroke-linecap:round;transition:stroke-dashoffset .45s cubic-bezier(.4,0,.2,1)}
+.roll-meta .n{font-family:var(--display);font-weight:800;font-size:26px;line-height:1;letter-spacing:-.02em}
+.roll-meta .t{color:var(--slate);font-size:13px;margin-top:4px}
+
+.card{background:var(--paper);border:1.5px solid var(--ink);border-radius:var(--r);padding:20px;margin:14px 0}
+h2{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:-.01em;margin:0 0 12px}
+h3{font-family:var(--display);font-weight:600;font-size:15px;margin:0 0 10px;color:var(--slate)}
+
+ul.ing{list-style:none;margin:0;padding:0}
+ul.ing li{display:flex;gap:12px;align-items:baseline;padding:9px 0;border-bottom:1px solid var(--tile-2)}
+ul.ing li:last-child{border-bottom:0}
+.amt{font-variant-numeric:tabular-nums;font-weight:600;min-width:78px;flex:none;color:var(--berry)}
+.note-inline{display:block;font-size:13px;color:var(--slate)}
+
+.step-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.step-num{font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--berry);flex:none;padding-top:3px}
+.step-title{font-family:var(--display);font-weight:800;font-size:23px;line-height:1.15;letter-spacing:-.01em;margin:0}
+.step-body{margin:0;font-size:17.5px}
+.step-body b{background:var(--berry-soft);font-weight:600;padding:1px 5px;border-radius:5px}
+
+.timer{margin-top:18px;border-top:1.5px dashed var(--tile-2);padding-top:16px}
+.clock{font-family:var(--display);font-weight:800;font-size:42px;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;line-height:1;margin-bottom:12px}
+.clock.done{color:var(--berry)}
+.timer-btns{display:flex;gap:8px;flex-wrap:wrap}
+button.mini{border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);
+  font-family:var(--body);font-weight:600;font-size:14px;padding:9px 16px;border-radius:999px;cursor:pointer;transition:.15s}
+button.mini:hover{background:var(--tile)}
+button.mini.go{background:var(--berry);border-color:var(--berry);color:#fff}
+button.mini:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+
+.notes p{margin:0 0 12px;font-size:15px;color:var(--slate)}
+.notes p:last-child{margin-bottom:0}
+.notes strong{color:var(--ink)}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--paper);
+  border-top:1.5px solid var(--ink);padding:12px 18px calc(12px + env(safe-area-inset-bottom));
+  display:flex;justify-content:center}
+.bar-inner{max-width:640px;width:100%;display:flex;gap:10px}
+button.nav{flex:1;border:1.5px solid var(--ink);background:var(--paper);color:var(--ink);
+  font-family:var(--display);font-weight:600;font-size:16px;padding:14px;border-radius:var(--r);cursor:pointer;transition:.15s}
+button.nav.primary{background:var(--ink);color:var(--paper);flex:1.6}
+button.nav:disabled{opacity:.32;cursor:default}
+button.nav:focus-visible{outline:3px solid var(--berry);outline-offset:2px}
+
+footer{padding:26px 0 8px;color:var(--slate);font-size:13px;text-align:center}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="topbar">
+  <div class="lang">
+    <button id="lang-de" aria-pressed="true">DE</button>
+    <button id="lang-hu" aria-pressed="false">HU</button>
+  </div>
+</div>
+
+<header>
+  <p class="eyebrow" id="h-eyebrow"></p>
+  <h1 id="h-title"></h1>
+  <p class="sub" id="h-sub"></p>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-0" aria-selected="true"></button>
+    <button class="tab" role="tab" id="tab-1" aria-selected="false"></button>
+  </div>
+</header>
+
+<div class="roll">
+  <svg viewBox="0 0 100 100" aria-hidden="true">
+    <path id="sp-track" class="track"></path>
+    <path id="sp-fill" class="fill"></path>
+    <path id="sp-cream" class="cream"></path>
+  </svg>
+  <div class="roll-meta">
+    <div class="n" id="progress-n"></div>
+    <div class="t" id="progress-t"></div>
+  </div>
+</div>
+
+<div id="view"></div>
+<footer id="h-foot"></footer>
+</div>
+
+<div class="bar"><div class="bar-inner">
+  <button class="nav" id="btn-back"></button>
+  <button class="nav primary" id="btn-next"></button>
+</div></div>
+
+<script>
+const UI = {
+  de:{
+    eyebrow:"Für einen heißen Tag gebaut",
+    title:"Erdbeer-Mascarpone-<br>Biskuitrolle",
+    sub:"Zwei Teile, ein Kuchen. Erst der Boden, dann die Füllung. Tippe dich Schritt für Schritt.",
+    tabs:["1 · Biskuitboden","2 · Füllen & Rollen"],
+    ingredients:"Zutaten", start:"Erst lesen, dann loslegen",
+    step:"Schritt", of:"/", notes:"Gut zu wissen",
+    back:"Zurück", go:"Loslegen", next:"Weiter", toFill:"Weiter zur Füllung", done:"Fertig",
+    tStart:"Start", tPause:"Pause", tAgain:"Nochmal", tReset:"Zurücksetzen", tDone:"Fertig",
+    foot:"Gebacken, getestet, für gut befunden."
+  },
+  hu:{
+    eyebrow:"Forró napra tervezve",
+    title:"Epres mascarponés<br>piskótatekercs",
+    sub:"Két rész, egy sütemény. Előbb a lap, aztán a töltelék. Kattints végig lépésről lépésre.",
+    tabs:["1 · Piskótalap","2 · Krémkészítés és töltés"],
+    ingredients:"Hozzávalók", start:"Előbb olvasd el, aztán kezdd el",
+    step:"Lépés", of:"/", notes:"Jó tudni",
+    back:"Vissza", go:"Kezdjük", next:"Tovább", toFill:"Tovább a töltelékhez", done:"Kész",
+    tStart:"Indítás", tPause:"Szünet", tAgain:"Újra", tReset:"Nullázás", tDone:"Kész",
+    foot:"Megsütve, kipróbálva, finomnak találva. :)"
+  }
+};
+
+const RECIPES = {
+de:[
+{
+  title:"Biskuitboden",
+  meta:"Blech 30 × 40 cm · ca. 1,5 Std. inkl. Auskühlen",
+  ing:[
+    ["4","Eier, Größe M","zimmerwarm – schlagen mehr Volumen auf"],
+    ["100 g","Zucker","normaler weißer Kristallzucker"],
+    ["80 g","Mehl Type 405",""],
+    ["20 g","Speisestärke","macht den Boden elastisch – das Wichtigste beim Rollen"],
+    ["1 Prise","Salz",""],
+    ["1 Pck.","Vanillezucker",""],
+    ["30 g","Zucker fürs Tuch","kein Puderzucker – der wird pappig"]
+  ],
+  steps:[
+    ["Vorbereiten","Ofen auf <b>200 °C</b> Ober-/Unterhitze vorheizen. Blech mit Backpapier auslegen. Ein sauberes Küchentuch bereitlegen und mit den 30 g Zucker bestreuen – trocken, nicht angefeuchtet. Wer keins ohne Weichspüler hat, nimmt ein zweites Stück Backpapier.",0],
+    ["Eiweiß schlagen","Eier trennen. Eiweiß mit dem Salz steif schlagen, dabei die 100 g Zucker langsam einrieseln lassen. Fertig ist es, wenn die Masse glatt ist und feste Spitzen zieht. Etwas Glanz gehört dazu – matt und körnig heißt überschlagen.",240],
+    ["Eigelb unterheben","Eigelb mit dem Vanillezucker kurz verquirlen und in zwei Portionen unter den Eischnee heben. <b>Nicht rühren</b> – die Luft ist das einzige Triebmittel.",0],
+    ["Mehl unterheben","Mehl und Stärke zusammen darübersieben und in zwei Portionen unterheben. Nur bis gerade eben vermischt.",0],
+    ["Aufstreichen","Masse aufs Blech streichen, gleichmäßig etwa <b>1 cm dick</b>, bis in die Ecken. Zwei, drei Züge mit der Palette – nicht nachglätten, das drückt die Luft raus. Dünne Stellen reißen später genau dort.",0],
+    ["Backen","10–12 Minuten bei 200 °C. Fertig ist er, wenn er hellgoldbraun ist und bei leichtem Fingerdruck zurückfedert. Lieber eine Minute zu früh raus – trockener Biskuit ist der häufigste Grund für Risse.",660],
+    ["Stürzen","Sofort auf das bezuckerte Tuch stürzen, Backpapier abziehen. Falls es klebt: kurz mit kaltem Wasser bepinseln.",0],
+    ["Warm einrollen","Noch heiß, samt Tuch, <b>von der langen Seite her</b> aufrollen. Das ist der entscheidende Schritt: der Biskuit lernt die Rundung, solange er elastisch ist. Danach reißt er später beim Füllen nicht mehr.",0],
+    ["Auskühlen","Eingerollt vollständig auskühlen lassen. In der Zeit die Füllung ansetzen – Reiter 2 oben.",3600]
+  ],
+  notes:[
+    "<strong>Warum Speisestärke?</strong> Sie senkt den Proteinanteil und macht die Krume biegsamer. Reines Mehl gibt einen festeren Boden, der leichter bricht.",
+    "<strong>Nur Mehl Type 550 da?</strong> Geht auch – dann 70 g Mehl und 30 g Stärke nehmen und zweimal sieben.",
+    "<strong>Kein brauner Zucker im Eischnee.</strong> Die groben Kristalle lösen sich zu langsam und destabilisieren den Schaum."
+  ]
+},
+{
+  title:"Füllen & Rollen",
+  meta:"Für einen ausgekühlten Boden 30 × 40 cm",
+  ing:[
+    ["250 g","Mascarpone","kalt aus dem Kühlschrank"],
+    ["200 g","Schlagsahne","mindestens 30 % Fett, sehr kalt"],
+    ["40 g","Puderzucker","laktosefrei: 30 g – die schmeckt süßer"],
+    ["3 Blatt","Blattgelatine","bei unter 25 °C reichen 2"],
+    ["10 g","Erdbeerpulver","gefriergetrocknete Erdbeeren, fein gemahlen"],
+    ["1 TL","Zitronensaft","aus der Flasche ist völlig in Ordnung"],
+    ["1 TL","Vanilleextrakt",""],
+    ["110 g","Erdbeermarmelade","kommt auf den Boden, nicht in die Creme"]
+  ],
+  steps:[
+    ["Gelatine einweichen","Blätter einzeln in kaltes Wasser legen, vollständig bedeckt. Kalt heißt unter 25 °C – Leitungswasser kurz laufen lassen. Einzeln, nicht als Stapel, sonst quellen sie ungleichmäßig.",300],
+    ["Mascarpone glatt rühren","Mascarpone mit Puderzucker, Erdbeerpulver (durch ein Sieb), Zitronensaft und Vanille <b>höchstens 20 Sekunden</b> glatt rühren. Länger schlagen bricht die Fettemulsion und die Creme wird grieselig. Danach probieren und bei Bedarf nachsüßen – solange die Sahne noch nicht drin ist, geht das problemlos.",0],
+    ["Gelatine auflösen","Gelatine gut ausdrücken und mit 2 EL der Sahne bei milder Hitze auflösen. <b>Nicht kochen.</b> Abkühlen lassen, bis sie nur noch handwarm ist.",0],
+    ["Angleichen","3 EL der Mascarponemasse in die handwarme Gelatine rühren, dann diese Mischung zurück in die restliche Mascarpone. Direkt in die kalte Masse gegossen würde die Gelatine sofort Fäden ziehen.",0],
+    ["Sahne schlagen","Restliche Sahne in einer kalten Schüssel steif schlagen. Fest, aber nicht bis sie körnig wird.",150],
+    ["Unterheben","Sahne in zwei Portionen mit dem Teigschaber unter die Mascarpone heben. Nicht rühren.",0],
+    ["Creme anziehen lassen","In den Kühlschrank, bis sie streichfest ist – der Löffel hinterlässt eine Spur, die stehen bleibt. Etwa wie weiche Butter. <b>Nicht länger als 45 Minuten</b>, sonst ist sie durchgeliert und bricht beim Streichen.",1500],
+    ["Biskuit öffnen","Ausgekühlten Biskuit vorsichtig aufrollen und flach hinlegen, Tuch abziehen. Nicht plattdrücken – die leichte Rundung darf bleiben.",0],
+    ["Marmelade auftragen","Marmelade 20 Sekunden in der Mikrowelle erwärmen, glatt rühren, <b>dünn</b> auf den Biskuit streichen und mit dem Pinsel leicht in die Krume einarbeiten. Am hinteren Ende 2–3 cm frei lassen. Eine dicke Schicht wirkt als Gleitebene und die Rolle schiebt sich beim Rollen auseinander.",0],
+    ["Creme aufstreichen","Creme gleichmäßig über die Marmelade streichen, hinten ebenfalls 2–3 cm frei lassen. Dort trifft nackter Biskuit auf Biskuit und haftet – sonst quillt die Creme heraus.",0],
+    ["Aufrollen","Von der langen Seite her aufrollen. Erste Windung eng ansetzen, dann mit gleichmäßigem Zug weiter, das Papier dabei nach hinten wegziehen. Naht am Ende <b>nach unten</b>.",0],
+    ["In Folie wickeln","Stramm in Frischhaltefolie einschlagen, Naht unten. Die Folie formt die Rolle rund und hält sie zusammen, während die Gelatine fest wird. Ab jetzt nicht mehr umdrehen.",0],
+    ["Kühlen","Mindestens 3 Stunden, besser über Nacht – volle Festigkeit erreicht Gelatine erst nach etwa 12 Stunden. Erst kurz vor dem Servieren anschneiden.",10800]
+  ],
+  notes:[
+    "<strong>Warum die Marmelade nicht in die Creme?</strong> Sie bringt Wasser mit und macht die Füllung weich. Auf dem Boden macht sie ihn geschmeidig – da hilft sie sogar beim Rollen.",
+    "<strong>Kein Erdbeerpulver bekommen?</strong> Gefriergetrocknete Erdbeeren selbst mahlen, oder 150 g Marmelade auf die Hälfte einkochen und davon 3 EL in die Creme geben.",
+    "<strong>Transport bei Hitze:</strong> vorher 30 Minuten ins Gefrierfach, dann in die Kühlbox auf Kühlakkus, ein Handtuch dazwischen. Am Stück transportieren, erst am Ziel schneiden.",
+    "<strong>Riss beim Rollen?</strong> Halb so wild. Nach dem Kühlen verschwindet das meiste, den Rest deckt Puderzucker ab."
+  ]
+}],
+hu:[
+{
+  title:"Piskótalap",
+  meta:"Tepsi 30 × 40 cm · kb. 1,5 óra a hűléssel együtt",
+  ing:[
+    ["4 db","tojás (M-es)","szobahőmérsékletű – sokkal jobban felverhető"],
+    ["100 g","cukor","sima fehér kristálycukor"],
+    ["80 g","BL 55 liszt","a német 405-ös megfelelője"],
+    ["20 g","étkezési keményítő","ettől lesz rugalmas a lap – tekercsnél ez a legfontosabb"],
+    ["1 csipet","só",""],
+    ["1 cs.","vaníliás cukor",""],
+    ["30 g","cukor a konyharuhához","porcukor nem jó – az beragad"]
+  ],
+  steps:[
+    ["Előkészítés","Melegítsd elő a sütőt <b>200 °C</b> alsó-felső sütésre. A tepsit béleld ki sütőpapírral. Készíts oda egy tiszta konyharuhát, és szórd meg a 30 g cukorral – szárazon, ne nedvesítsd be. Ha nincs öblítőmentes konyharuhád, használj inkább még egy lap sütőpapírt.",0],
+    ["A fehérje felverése","Válaszd szét a tojásokat. FONTOS: tojássárgája nem kerülhet bele, különben nem lehet felverni a habot! A fehérjét a csipet sóval verd keményre, közben lassan szórd bele a 100 g cukrot. Akkor jó, ha a hab szép sima és kemény. Egy kis fény hozzátartozik – a matt, szemcsés hab már túlvert.",240],
+    ["A sárgája beleforgatása","A tojássárgáját keverd el a vaníliás cukorral, majd két részletben óvatosan forgasd a habba. <b>Ne keverd / mixeld</b> – itt a levegő az egyetlen, ami a piskótát könnyűvé teszi.",0],
+    ["A liszt beleforgatása","A lisztet és a keményítőt együtt szitáld át, majd két részletben forgasd bele. Csak addig keverd, amíg éppen összeáll, és amennyire lehet, csomómentes legyen.",0],
+    ["Elsimítás","Kend a masszát a tepsibe egyenletesen, kb. <b>1 cm vastagon</b>, egészen a sarkokig. Két-három húzás a spatulával – ne simítgasd tovább, mert kinyomod belőle a levegőt. A vékony részek később pont ott fognak elrepedni.",0],
+    ["Sütés","10–12 perc 200 °C-on. Akkor kész, ha világos aranybarna, és enyhe ujjnyomásra visszarugózik. Inkább egy perccel korábban vedd ki – a száraz piskóta a repedés első számú oka.",660],
+    ["Átfordítás","Azonnal borítsd a cukrozott konyharuhára, és húzd le a sütőpapírt. Ha ragad: kend meg gyorsan hideg vízzel.",0],
+    ["Melegen feltekerés","Még forrón, a ruhával együtt, <b>a hosszabbik oldal felől</b> tekerd fel. Ez a döntő lépés: a piskóta így tanulja meg az ívet, amíg még rugalmas. Utána a töltésnél már nem fog elrepedni.",0],
+    ["Hűlés","Feltekerve hagyd teljesen kihűlni. Közben készítsd el a tölteléket – fent a 2-es fül.",3600]
+  ],
+  notes:[
+    "<strong>Miért kell a keményítő?</strong> Csökkenti a fehérjearányt, és hajlékonyabbá teszi a tésztát. Tiszta lisztből keményebb lap lesz, ami könnyebben törik.",
+    "<strong>Csak BL 80-as lisztod van?</strong> Az is jó – akkor 70 g liszt és 30 g keményítő legyen, és szitáld át kétszer.",
+    "<strong>Barna cukor nem való a habba.</strong> A durva kristályok túl lassan oldódnak, és összeesik tőlük a hab."
+  ]
+},
+{
+  title:"Krémkészítés és töltés",
+  meta:"Egy kihűlt 30 × 40 cm-es laphoz",
+  ing:[
+    ["250 g","mascarpone","hidegen, egyenesen a hűtőből"],
+    ["200 g","habtejszín","legalább 30 % zsírtartalom, jéghideg"],
+    ["40 g","porcukor","laktózmentesnél 30 g – az édesebb ízű"],
+    ["3 lap","zselatin","25 °C alatt elég 2 lap is"],
+    ["10 g","eperpor","liofilizált eper, finomra őrölve"],
+    ["1 tk","citromlé","az üveges is teljesen megfelel"],
+    ["1 tk","vaníliakivonat",""],
+    ["110 g","eperlekvár","a lapra kerül, nem a krémbe"]
+  ],
+  steps:[
+    ["Zselatin áztatása","A lapokat egyenként tedd hideg vízbe úgy, hogy teljesen ellepje. Hideg alatt 25 °C alattit értünk – folyasd meg egy kicsit a csapot. Egyesével, ne egymásra, különben egyenetlenül duzzadnak meg.",300],
+    ["A mascarpone kikeverése","A mascarponét a porcukorral, az eperporral (szitán át), a citromlével és a vaníliával <b>körülbelül 20 másodpercig</b> keverd simára. Ha sokáig vered, megtörik a zsíremulzió, és szemcséssé válik a krém. Utána kóstold meg, és ha kell, édesíts utána – amíg a tejszín nincs benne, ez még gond nélkül megy.",0],
+    ["A zselatin feloldása","A zselatinlapokat alaposan nyomkodd ki, majd 2 evőkanál tejszínnel, alacsony lángon olvaszd fel. <b>Ne forrald.</b> Hagyd kissé hűlni, amíg kézmelegre hűl.",0],
+    ["Hőmérséklet-kiegyenlítés","Keverj 3 evőkanál mascarponés masszát a kézmeleg zselatinba, majd ezt a keveréket keverd vissza a többi mascarponéba. Ha közvetlenül a hideg masszába öntenéd, a zselatin azonnal megdermedhet és csomóssá válhat.",0],
+    ["A tejszín felverése","A maradék tejszínt hideg tálban verd kemény habbá. Legyen kemény, de ne verd szemcséssé.",150],
+    ["Összeforgatás","A tejszínhabot két részletben, szilikonspatulával forgasd a mascarponéhoz. Ne keverd.",0],
+    ["A krém dermedése","Tedd a krémet hűtőbe, amíg kenhető, de már kellően szilárd nem lesz. Akkor jó, ha a kanál nyoma megmarad benne, és az állaga a puha vajéhoz hasonlít. <b>Legfeljebb 45 percig</b>, különben teljesen megdermed, és kenéskor törni fog.",1500],
+    ["A piskótalap kibontása","A teljesen kihűlt piskótát óvatosan tekerd ki, majd fektesd le, és húzd le róla a konyharuhát. Ne próbáld teljesen kisimítani – az enyhe ív nyugodtan megmaradhat.",0],
+    ["A lekvár felkenése","A lekvárt melegítsd fel, majd keverd simára. <b>Vékonyan kend el</b> a piskótalapon, és egy ecset segítségével kissé dolgozd bele a piskótába. A két szélén hagyj 2–3 cm-t szabadon. Ne használj túl vastag réteget, mert a lekvár csúszóssá teszi a felületet, és tekerés közben szétnyomódhat a tekercs.",0],
+    ["A krém felkenése","Kend a krémet egyenletesen a lekvárra, hátul szintén hagyj 2–3 cm-t szabadon. Ott csupasz piskóta találkozik piskótával és megtapad – különben kinyomódik a krém.",0],
+    ["Feltekerés","A hosszabbik oldal felől kezdd el feltekerni. Az első fordulat legyen szoros, majd egyenletes mozdulatokkal folytasd a tekerést, miközben fokozatosan húzd hátra a konyharuhát / sütőpapírt. A tekercs vége <b>alulra</b> kerüljön.",0],
+    ["Becsomagolás","Szorosan csomagold be frissentartó / folpack fóliába úgy, hogy a záródás lehetőleg alulra kerüljön. A fólia segít formára igazítani a tekercset, és egyben tartja, amíg a zselatin megköt. Innentől kezdve ne forgasd.",0],
+    ["Hűtés","Legalább 3 óra, de inkább egy éjszaka – a zselatin csak kb. 12 óra után éri el a teljes szilárdságát. Csak közvetlenül tálalás előtt szeleteld.",10800]
+  ],
+  notes:[
+    "<strong>Miért nem a krémbe megy a lekvár?</strong> Vizet visz bele, és fellazítja a tölteléket. A lapon viszont puhítja azt – ott még segít is a tekerésnél.",
+    "<strong>Nincs eperpor?</strong> Őrölj magad liofilizált (fagyasztva szárított) epret, vagy forralj be 150 g lekvárt a felére, és abból tegyél 3 evőkanállal a krémbe.",
+    "<strong>Szállítás melegben:</strong> előtte 30 perc mélyhűtő, aztán hűtőtáskába, hűtőakkukra, közéjük egy konyharuha. Egyben szállítsd, csak a helyszínen vágd fel.",
+    "<strong>Berepedt tekerés közben?</strong> Nem tragédia. Hűtés után a legtöbb repedés eltűnik, a maradékot elfedi a porcukor."
+  ]
+}]
+};
+
+let lang="de", r=0, pos=-1;
+let tick=null, left=0, running=false;
+
+/* Spirale */
+function spiral(turns,r0,r1){
+  const pts=[],N=turns*90;
+  for(let i=0;i<=N;i++){
+    const t=i/N,a=t*turns*2*Math.PI-Math.PI/2,rad=r0+(r1-r0)*t;
+    pts.push((50+rad*Math.cos(a)).toFixed(2)+","+(50+rad*Math.sin(a)).toFixed(2));
+  }
+  return "M"+pts.join("L");
+}
+const d1=spiral(2.6,6,40), d2=spiral(2.6,10,44);
+["sp-track","sp-fill"].forEach(id=>document.getElementById(id).setAttribute("d",d1));
+document.getElementById("sp-cream").setAttribute("d",d2);
+const fillEl=document.getElementById("sp-fill"), creamEl=document.getElementById("sp-cream");
+[fillEl,creamEl].forEach(el=>{const L=el.getTotalLength();el.style.strokeDasharray=L;el.style.strokeDashoffset=L;});
+function setSpiral(f){[fillEl,creamEl].forEach(el=>{el.style.strokeDashoffset=el.getTotalLength()*(1-f);});}
+
+/* Timer */
+function stopTimer(){if(tick){clearInterval(tick);tick=null;}running=false;}
+function fmt(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+  return (h?h+":"+String(m).padStart(2,"0"):m)+":"+String(x).padStart(2,"0");}
+function beep(){
+  try{
+    const C=new (window.AudioContext||window.webkitAudioContext)();
+    [0,.28,.56].forEach(o=>{
+      const osc=C.createOscillator(),g=C.createGain();
+      osc.frequency.value=880;osc.connect(g);g.connect(C.destination);
+      g.gain.setValueAtTime(0,C.currentTime+o);
+      g.gain.linearRampToValueAtTime(.22,C.currentTime+o+.02);
+      g.gain.exponentialRampToValueAtTime(.001,C.currentTime+o+.22);
+      osc.start(C.currentTime+o);osc.stop(C.currentTime+o+.24);
+    });
+  }catch(e){}
+  if(navigator.vibrate)navigator.vibrate([180,90,180]);
+}
+function paintClock(){
+  const t=UI[lang], c=document.getElementById("clock"); if(!c)return;
+  c.textContent = left>0 ? fmt(left) : t.tDone;
+  c.classList.toggle("done",left<=0);
+  const b=document.getElementById("t-go");
+  if(b) b.textContent = running ? t.tPause : (left>0 ? t.tStart : t.tAgain);
+}
+function toggleTimer(){
+  if(left<=0){left=RECIPES[lang][r].steps[pos][2];running=false;paintClock();return;}
+  if(running){stopTimer();}
+  else{
+    running=true;
+    tick=setInterval(()=>{left--;if(left<=0){left=0;stopTimer();beep();}paintClock();},1000);
+  }
+  paintClock();
+}
+
+/* Rendern */
+function render(scroll){
+  const t=UI[lang], rec=RECIPES[lang][r], v=document.getElementById("view"), total=rec.steps.length;
+
+  document.documentElement.lang = lang;
+  document.getElementById("h-eyebrow").textContent=t.eyebrow;
+  document.getElementById("h-title").innerHTML=t.title;
+  document.getElementById("h-sub").textContent=t.sub;
+  document.getElementById("h-foot").textContent=t.foot;
+  document.getElementById("tab-0").textContent=t.tabs[0];
+  document.getElementById("tab-1").textContent=t.tabs[1];
+  document.getElementById("tab-0").setAttribute("aria-selected",r===0);
+  document.getElementById("tab-1").setAttribute("aria-selected",r===1);
+  document.getElementById("lang-de").setAttribute("aria-pressed",lang==="de");
+  document.getElementById("lang-hu").setAttribute("aria-pressed",lang==="hu");
+
+  if(pos<0){
+    setSpiral(0);
+    document.getElementById("progress-n").textContent=t.ingredients;
+    document.getElementById("progress-t").textContent=t.start;
+    v.innerHTML='<div class="card"><h2>'+rec.title+'</h2><ul class="ing">'+
+      rec.ing.map(i=>'<li><span class="amt">'+i[0]+'</span><span>'+i[1]+
+        (i[2]?'<span class="note-inline">'+i[2]+'</span>':'')+'</span></li>').join('')+
+      '</ul></div><div class="card notes"><h3>'+t.notes+'</h3>'+
+      rec.notes.map(n=>'<p>'+n+'</p>').join('')+'</div>';
+  }else{
+    const s=rec.steps[pos];
+    setSpiral((pos+1)/total);
+    document.getElementById("progress-n").textContent=t.step+" "+(pos+1)+" "+t.of+" "+total;
+    document.getElementById("progress-t").textContent=rec.title;
+    v.innerHTML='<div class="card"><div class="step-head">'+
+      '<span class="step-num">'+String(pos+1).padStart(2,"0")+'</span>'+
+      '<h2 class="step-title">'+s[0]+'</h2></div>'+
+      '<p class="step-body">'+s[1]+'</p>'+
+      (s[2]?'<div class="timer"><div class="clock" id="clock"></div><div class="timer-btns">'+
+        '<button class="mini go" id="t-go"></button>'+
+        '<button class="mini" id="t-reset">'+t.tReset+'</button></div></div>':'')+
+      '</div>';
+    if(s[2]){
+      if(!running){left=s[2];}
+      paintClock();
+      document.getElementById("t-go").onclick=toggleTimer;
+      document.getElementById("t-reset").onclick=()=>{stopTimer();left=s[2];paintClock();};
+    }
+  }
+
+  const back=document.getElementById("btn-back"), next=document.getElementById("btn-next");
+  back.textContent=t.back; back.disabled=pos<0;
+  if(pos<0){next.textContent=t.go;next.disabled=false;}
+  else if(pos<total-1){next.textContent=t.next;next.disabled=false;}
+  else if(r===0){next.textContent=t.toFill;next.disabled=false;}
+  else{next.textContent=t.done;next.disabled=true;}
+
+  if(scroll!==false) window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.getElementById("btn-next").onclick=()=>{
+  stopTimer();
+  const total=RECIPES[lang][r].steps.length;
+  if(pos<total-1){pos++;} else if(r===0){r=1;pos=-1;}
+  render();
+};
+document.getElementById("btn-back").onclick=()=>{stopTimer();pos--;render();};
+document.getElementById("tab-0").onclick=()=>{stopTimer();r=0;pos=-1;render();};
+document.getElementById("tab-1").onclick=()=>{stopTimer();r=1;pos=-1;render();};
+document.getElementById("lang-de").onclick=()=>{lang="de";render(false);};
+document.getElementById("lang-hu").onclick=()=>{lang="hu";render(false);};
+document.addEventListener("keydown",e=>{
+  const n=document.getElementById("btn-next"), b=document.getElementById("btn-back");
+  if(e.key==="ArrowRight"&&!n.disabled)n.click();
+  if(e.key==="ArrowLeft"&&!b.disabled)b.click();
+});
+
+render(false);
+</script>
+</body>
+</html>
